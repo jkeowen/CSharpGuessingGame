@@ -6,12 +6,19 @@ namespace GuessingGame
     {
         static void Main(string[] args)
         {
-            int lowerBound = 1; int upperBound = 25;
-            //int winningNumber = new Random().Next(lowerBound, upperBound);
+            int lowerBound = 1; int upperBound = 5;
+            int winningNumber = 1;
             bool hasWon = false;
-            int winningNumber = 5;
+            bool isGameOver = false;
+            bool playAgain = true;
             do
             {
+                if(playAgain)
+                {
+                    winningNumber = new Random().Next(lowerBound, upperBound);
+                    playAgain = false;
+                    hasWon = false; 
+                }
                 Console.WriteLine($"Guess a number between {lowerBound} and {upperBound}");
 
                 string playerGuessInput = Console.ReadLine();
@@ -39,10 +46,32 @@ namespace GuessingGame
                             Console.WriteLine("WRRROOONNNG!");
                         }
                     }
+                    if(hasWon)
+                    {
+                        do
+                        {
+                            Console.WriteLine("Play again? y/n");
+                            string playAgainInput = Console.ReadLine();
+                            if (playAgainInput == "n")
+                            {
+                                isGameOver = true;
+                            }
+                            else if (playAgainInput == "y")
+                            {
+                                playAgain = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid Input");
+                            }
+                        }
+                        while (!isGameOver && !playAgain);
+                    }
 
                 }
 
-            } while (!hasWon);
+            } while (!isGameOver);
+            Console.WriteLine("Thanks for playing!");
            
 
             
